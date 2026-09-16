@@ -65,3 +65,23 @@ ps -eo pid,comm,%cpu --sort=-%cpu | head -6
 echo 
 echo "Top RAM processes:"
 ps -eo pid,comm,%mem --sort=-%mem | head -6
+  
+
+
+
+echo 
+
+echo "- - - - - - -NETWORK - - - - - - - -"
+
+
+echo "Interfaces:"
+ip -br addr
+  echo 
+
+echo "Default route:"
+ip route|grep default 
+
+echo 
+
+echo "Network statistics:"
+ip -s link 
