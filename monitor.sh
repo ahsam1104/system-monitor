@@ -19,3 +19,7 @@ CPU_CORES=$(nproc)
 echo "Model: $CPU_MODEL"
 
 echo "Cores: $CPU_CORES"
+
+CPU_USAGE=$(top -bn1| grep "Cpu(s)"| awk '{print 100 -$8}')
+
+echo "Usage: ${CPU_USAGE}%"
