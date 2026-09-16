@@ -1,6 +1,23 @@
 #!/bin/bash 
 
+progress_bar() {
+    local percent=$1
+    local width=20
+    local filled=$((percent * width / 100))
+    local empty=$((width - filled))
 
+    printf "["
+    
+    for ((i=0; i<filled; i++)); do
+        printf "#"
+    done
+
+    for ((i=0; i<empty; i++)); do
+        printf "-"
+    done
+
+    printf "] %s%%" "$percent"
+}
 
 while true
 do
@@ -31,7 +48,9 @@ echo "Cores: $CPU_CORES"
 
 CPU_USAGE=$(top -bn1| grep "Cpu(s)"| awk '{print 100 -$8}')
 
-echo "Usage: ${CPU_USAGE}%"
+printf "Usage: "
+progress_bar "${CPU_USAGE%.*}"
+echo
 
 echo 
 echo "- - - - - - - MEMORY- - - - - -"
@@ -45,8 +64,9 @@ RAM_USAGE=$((USED_RAM * 100 / TOTAL_RAM))
 echo "Total: ${TOTAL_RAM}MB"
 echo "Used: ${USED_RAM}MB"
 echo "Available: ${AVAILABLE_RAM}MB"
-echo "Usage: ${RAM_USAGE}%"
-
+printf "Usage: "
+progress_bar "$RAM_USAGE"
+echo
 
 echo 
 
@@ -63,7 +83,11 @@ DISK_USAGE=$(echo "$DISK_INFO"|awk '{print $5}')
 echo "Total: $DISK_TOTAL"
 echo "Used : $DISK_USED"
 echo "Available: $DISK_AVAILABLE"
-echo "Usage : $DISK_USAGE"
+DISK_PERCENT=${DISK_USAGE%\%}
+printf "Usage: "
+progress_bar "$DISK_PERCENT"
+echo
+
 
 echo 
 echo "- - - - - - - - - PROCESSES- - - - - - - - "
