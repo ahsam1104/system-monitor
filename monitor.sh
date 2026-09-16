@@ -37,3 +37,21 @@ echo "Total: ${TOTAL_RAM}MB"
 echo "Used: ${USED_RAM}MB"
 echo "Available: ${AVAILABLE_RAM}MB"
 echo "Usage: ${RAM_USAGE}%"
+
+
+echo 
+
+echo "- - - - - - - DISK - - - - - - - -"
+DISK_INFO=$(df -h /|tail -1)
+
+
+DISK_TOTAL=$(echo "$DISK_INFO"|awk '{print $2}')
+DISK_USED=$(echo "$DISK_INFO" |awk '{print $3}')
+DISK_AVAILABLE=$(echo "$DISK_INFO" |awk '{print $4}')
+DISK_USAGE=$(echo "$DISK_INFO"|awk '{print $5}')
+
+
+echo "Total: $DISK_TOTAL"
+echo "Used : $DISK_USED"
+echo "Available: $DISK_AVAILABLE"
+echo "Usage : $DISK_USAGE"
