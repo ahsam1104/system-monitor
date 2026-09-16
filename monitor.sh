@@ -55,3 +55,13 @@ echo "Total: $DISK_TOTAL"
 echo "Used : $DISK_USED"
 echo "Available: $DISK_AVAILABLE"
 echo "Usage : $DISK_USAGE"
+
+echo 
+echo "- - - - - - - - - PROCESSES- - - - - - - - "
+
+echo "Running processes:"
+ps -eo pid,comm,%cpu --sort=-%cpu | head -6
+
+echo 
+echo "Top RAM processes:"
+ps -eo pid,comm,%mem --sort=-%mem | head -6
