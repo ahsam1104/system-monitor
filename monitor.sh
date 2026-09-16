@@ -1,5 +1,14 @@
 #!/bin/bash 
 
+
+
+while true
+do
+clear
+
+
+
+
 echo "= = = = = = = = = = = = = = = = = = = "
 echo "          SYSTEM MONITOR              "
 echo "= = = = = = = = = = = = = = = = = = = "
@@ -85,3 +94,7 @@ echo
 
 echo "Network statistics:"
 ip -s link 
+
+
+sleep 2
+done
