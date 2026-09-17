@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 source config.conf
-
+source /etc/os-release
 
 
 LOG_FILE="logs/system-monitor.log"
@@ -51,7 +51,13 @@ echo "= = = = = = = = = = = = = = = = = = = "
 echo "Hostname: $(hostname)"
 echo "kernel: $(uname -r)"
 echo "Uptime: $(uptime -p)"
+ 
+echo "- - - - - - SYSTEM- - - - - - - "
 
+echo "OS: $PRETTY_NAME"
+echo "Architecture: $(uname -m)"
+echo "Shell: $SHELL"
+echo "User: $USER"
 
 echo 
 
