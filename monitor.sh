@@ -1,5 +1,23 @@
 #!/bin/bash 
 
+CPU_LIMIT=80
+RAM_LIMIT=80
+DISK_LIMIT=80
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 progress_bar() {
     local percent=$1
     local width=20
@@ -48,6 +66,12 @@ echo "Cores: $CPU_CORES"
 
 CPU_USAGE=$(top -bn1| grep "Cpu(s)"| awk '{print 100 -$8}')
 
+CPU_INT=${CPU_USAGE%.*}
+
+if [ "$CPU_INT" -ge "$CPU_LIMIT" ]; then
+    echo "WARNING: CPU usage is high!"
+fi
+
 printf "Usage: "
 progress_bar "${CPU_USAGE%.*}"
 echo
@@ -60,6 +84,11 @@ USED_RAM=$(free -m |awk '/Mem:/ {print $3}')
 AVAILABLE_RAM=$(free -m|awk '/Mem:/ {print $7}')
 
 RAM_USAGE=$((USED_RAM * 100 / TOTAL_RAM))
+
+if [ "$RAM_USAGE" -ge "$RAM_LIMIT" ]; then
+    echo "WARNING: RAM usage is high!"
+fi
+
 
 echo "Total: ${TOTAL_RAM}MB"
 echo "Used: ${USED_RAM}MB"
@@ -83,7 +112,13 @@ DISK_USAGE=$(echo "$DISK_INFO"|awk '{print $5}')
 echo "Total: $DISK_TOTAL"
 echo "Used : $DISK_USED"
 echo "Available: $DISK_AVAILABLE"
+
 DISK_PERCENT=${DISK_USAGE%\%}
+if [ "$DISK_PERCENT" -ge "$DISK_LIMIT" ]; then
+    echo "WARNING: Disk usage is high!"
+fi
+
+
 printf "Usage: "
 progress_bar "$DISK_PERCENT"
 echo
