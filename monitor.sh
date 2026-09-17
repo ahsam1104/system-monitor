@@ -37,10 +37,30 @@ progress_bar() {
     printf "] %s%%" "$percent"
 }
 
+get_network_bytes(){
+		INTERFACE=$(ip route | awk '/default/ {print $5; exit}')
+	RX=$(cat "/sys/class/net/$INTERFACE/statistics/rx_bytes")
+	TX=$(cat "/sys/class/net/$INTERFACE/statistics/tx_bytes")
+	echo "$RX $TX"
+}
+
+PREV=$(get_network_bytes)
+PREV_RX=$(echo "$PREV" | awk '{print $1}')
+PREV_TX=$(echo "$PREV" | awk '{print $2}')
 while true
 do
 clear
+ 
+CURRENT=$(get_network_bytes)
 
+CURRENT_RX=$(echo "$CURRENT" | awk '{print $1}')
+CURRENT_TX=$(echo "$CURRENT" | awk '{print $2}')
+
+RX_SPEED=$((CURRENT_RX - PREV_RX))
+TX_SPEED=$((CURRENT_TX - PREV_TX))
+
+PREV_RX=$CURRENT_RX
+PREV_TX=$CURRENT_TX
 
 
 
@@ -152,6 +172,11 @@ ps -eo pid,comm,%mem --sort=-%mem | head -6
 echo 
 
 echo "- - - - - - -NETWORK - - - - - - - -"
+
+
+echo "Interface: $INTERFACE"
+echo "Download:  $((RX_SPEED / 1024)) KB/s"
+echo "Upload:    $((TX_SPEED / 1024)) KB/s"
 
 
 echo "Interfaces:"
