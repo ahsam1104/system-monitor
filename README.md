@@ -32,21 +32,3 @@ Clone the repository:
 ```bash
 git clone https://github.com/ahsam1104/system-monitor.git
 
-system-monitor/
-├── monitor.sh
-├── config.conf
-├── logs/
-│   └── system-monitor.log
-└── README.md
-
-
-Technologies
-Bash
-Linux
-Git
-/proc
-/sys
-ip
-awk
-sed
-grep
