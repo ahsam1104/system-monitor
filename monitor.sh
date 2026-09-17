@@ -1,8 +1,8 @@
 #!/bin/bash 
 
-CPU_LIMIT=80
-RAM_LIMIT=80
-DISK_LIMIT=80
+source config.conf
+
+
 
 LOG_FILE="logs/system-monitor.log"
 
@@ -158,5 +158,5 @@ ip route|grep default
  
 
 
-sleep 2
+sleep "$REFRESH_RATE"
 done
