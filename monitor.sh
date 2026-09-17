@@ -4,7 +4,7 @@ CPU_LIMIT=80
 RAM_LIMIT=80
 DISK_LIMIT=80
 
-
+LOG_FILE="logs/system-monitor.log"
 
 
 
@@ -114,6 +114,12 @@ echo "Used : $DISK_USED"
 echo "Available: $DISK_AVAILABLE"
 
 DISK_PERCENT=${DISK_USAGE%\%}
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+
+echo "$TIMESTAMP|CPU=${CPU_INT}% | RAM=${RAM_USAGE}% | DISK =${DISK_PERCENT}%">> "$LOG_FILE"
+
+
+
 if [ "$DISK_PERCENT" -ge "$DISK_LIMIT" ]; then
     echo "WARNING: Disk usage is high!"
 fi
@@ -149,10 +155,7 @@ ip -br addr
 echo "Default route:"
 ip route|grep default 
 
-echo 
-
-echo "Network statistics:"
-ip -s link 
+ 
 
 
 sleep 2
